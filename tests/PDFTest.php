@@ -3,6 +3,9 @@
 namespace MathieuTu\PDFLayer\Tests;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Filesystem\Filesystem;
@@ -64,19 +67,22 @@ class PDFTest extends TestCase
         ]);
     }
 
-    private function seeInRequest(array $subset, PDF $pdf = null)
+    private function seeInRequest(array $subset, $equals = false)
     {
         if (empty($subset)) {
             return;
         }
 
-        $pdf = $pdf ?: $this->pdf;
-        $requestArgs = $pdf->seeRequestArgs();
+        $requestArgs = $this->pdf->seeRequestArgs();
         $httpArgs = explode('?', $requestArgs['uri'])[1];
         parse_str($httpArgs, $args);
         $args += $requestArgs['postParams'];
 
-        $this->assertArraySubset($subset, $args);
+        if ($equals) {
+            $this->assertEquals($subset, $args);
+        } else {
+            $this->assertArraySubset($subset, $args);
+        }
     }
 
     public function testLoadUrl()
@@ -140,4 +146,90 @@ class PDFTest extends TestCase
             'orientation' => 'landscape',
         ]);
     }
+
+    /**
+     * @expectedException     \MathieuTu\PDFLayer\Exceptions\PDFLayerException
+     * @expectedExceptionCode    134
+     * @expectedExceptionMessage Error message
+     */
+    public function testOutputOK()
+    {
+        $this->mockClient();
+        $this->assertEquals('generatedPDF', $this->pdf->output());
+
+        $this->mockClient(new GuzzleResponse(200, [], json_encode([
+            'success' => false,
+            'error'   => ['code' => 134, 'type' => 'foo', 'info' => 'Error message'],
+        ])));
+        $this->pdf->output();
+    }
+
+    private function mockClient($response = null, $return = false)
+    {
+        $handler = HandlerStack::create(new MockHandler([
+            $response ?: new GuzzleResponse(200, [], 'generatedPDF'),
+        ]));
+        $httpClient = new Client(['handler' => $handler]);
+        if ($return) {
+            return $httpClient;
+        }
+        $this->newPDF($httpClient);
+    }
+
+    public function testStream()
+    {
+        $this->mockClient();
+        $response = $this->pdf->stream('foo.pdf');
+        $this->assertEquals('generatedPDF', $response->content());
+        $this->assertResponseHeadersContains($response, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="foo.pdf"',
+        ]);
+    }
+
+    /**
+     * @param $response
+     *
+     * @return mixed
+     */
+    private function assertResponseHeadersContains(\Illuminate\Http\Response $response, array $headers)
+    {
+        foreach ($headers as $key => $value) {
+            $this->assertTrue($response->headers->contains($key, $value));
+        }
+    }
+
+    public function testDownload()
+    {
+        $this->mockClient();
+        $response = $this->pdf->download('bar.pdf');
+        $this->assertEquals('generatedPDF', $response->content());
+        $this->assertResponseHeadersContains($response, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="bar.pdf"',
+        ]);
+    }
+
+    public function testSave()
+    {
+        $httpClient = $this->mockClient(null, true);
+        $files = m::mock(Filesystem::class);
+        $files->shouldReceive('put');
+
+        $this->newPDF($httpClient, null, $files);
+        $this->pdf->save('baz.php');
+    }
+
+    public function testMagicCallerAndSetter()
+    {
+        $this->pdf->setWatermarkInBackground(true);
+        $this->pdf->no_images = true;
+        $this->pdf->params = 'foo';
+        $this->seeInRequest([
+            'watermark_in_background' => 1,
+            'no_images'               => 1,
+            'params'                  => 'foo',
+        ]);
+    }
+
 }

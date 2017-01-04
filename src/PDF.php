@@ -7,55 +7,44 @@ use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Contracts\View\Factory as ViewFactory;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Response;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use MathieuTu\PDFLayer\Exceptions\PDFLayerException;
 
-/**
- * MathieuTu\PDFLayer\PDF
- *
- * @property Collection $params
- * @property string $pdf
- * @property array $config
- * @property \GuzzleHttp\Client $httpClient
- * @property \Illuminate\View\Factory $view
- * @property \Illuminate\Filesystem\Filesystem $files
- */
 class PDF
 {
-    private $params;
-    private $pdf;
-    private $config;
-    private $httpClient;
-    private $view;
-    private $files;
+    private $httpClient, $view, $files, $config, $params, $pdf;
 
     public function __construct(Client $httpClient, ConfigRepository $config, Filesystem $files, ViewFactory $view)
     {
         $this->httpClient = $httpClient;
         $this->view = $view;
         $this->files = $files;
-
-        $this->initializeConfig($config);
-        $this->initializeParams();
+        $this->config = $this->prepareConfig($config);
+        $this->params = $this->prepareParams();
     }
 
     /**
      * Load parameters from config file
      *
      * @param \Illuminate\Contracts\Config\Repository $config
+     *
+     * @return array
      */
-    private function initializeConfig(ConfigRepository $config)
+    private function prepareConfig(ConfigRepository $config)
     {
-        $this->config = $config->get('pdflayer');
+        return $config->get('pdflayer');
     }
 
-    private function initializeParams()
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    private function prepareParams()
     {
-        $this->params = collect($this->config['default_params']);
+        $params = collect($this->config['default_params']);
         if ($this->config['sandbox']) {
-            $this->params['test'] = 1;
+            $params['test'] = 1;
         }
+        return $params;
     }
 
     /**
@@ -70,6 +59,7 @@ class PDF
         if (!empty($this->config['secret_keyword'])) {
             $this->params['secret_key'] = md5($url . $this->config['secret_keyword']);
         }
+
         return $this;
     }
 
@@ -136,6 +126,7 @@ class PDF
      * Output the PDF as a string.
      *
      * @return string The rendered PDF as string
+     * @throws \Exception
      */
     public function output()
     {
@@ -178,6 +169,7 @@ class PDF
      * @param $postParams
      *
      * @return string
+     * @throws \RuntimeException
      * @throws \MathieuTu\PDFLayer\Exceptions\PDFLayerException
      */
     private function doRequest($uri, $postParams)
@@ -233,19 +225,16 @@ class PDF
      * @param $arguments
      *
      * @return $this|mixed
+     * @throws \InvalidArgumentException
      * @throws \BadMethodCallException
      */
     public function __call($name, $arguments)
     {
-        if (method_exists($this, $name)) {
-            return call_user_func_array([$this, $name], $arguments);
-        }
-
         if (Str::startsWith($name, 'set')) {
             $propertyCamel = Str::substr($name, Str::length('set'));
             $property = Str::snake($propertyCamel);
-
-            $this->params[$property] = $arguments;
+            
+            $this->params[$property] = $arguments[0];
 
             return $this;
         }
@@ -255,10 +244,6 @@ class PDF
 
     public function __set($name, $value)
     {
-        if (property_exists($this, $name)) {
-            return $this->{$name} = $value;
-        }
-
         return $this->params[$name] = $value;
     }
 
