@@ -70,7 +70,6 @@ class PDF
         if (!empty($this->config['secret_keyword'])) {
             $this->params['secret_key'] = md5($url . $this->config['secret_keyword']);
         }
-
         return $this;
     }
 
@@ -268,9 +267,18 @@ class PDF
         return $this->params->toArray();
     }
 
-    public function seeRequestArgs()
+    /**
+     * @param string $key uri or postParams
+     *
+     * @return array
+     */
+    public function seeRequestArgs($key = null)
     {
         list($uri, $postParams) = $this->prepareRequest();
+
+        if ($key) {
+            return ${$key};
+        }
 
         return compact('uri', 'postParams');
     }
