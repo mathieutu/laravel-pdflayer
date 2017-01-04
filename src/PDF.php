@@ -29,8 +29,6 @@ class PDF
     }
 
     /**
-     * Load parameters from config file.
-     *
      * @param \Illuminate\Contracts\Config\Repository $config
      *
      * @return array
@@ -54,6 +52,8 @@ class PDF
     }
 
     /**
+     * Load HTML and encoding from an URL.
+     *
      * @param $url
      *
      * @return $this
@@ -69,6 +69,16 @@ class PDF
         return $this;
     }
 
+    /**
+     * Load a View and convert it to HTML.
+     *
+     * @param string $view
+     * @param array $data
+     * @param array $mergeData
+     * @param string $encoding
+     *
+     * @return $this
+     */
     public function loadView($view, $data = [], $mergeData = [], $encoding = null)
     {
         $html = $this->view->make($view, $data, $mergeData)->render();
@@ -76,6 +86,14 @@ class PDF
         return $this->loadHTML($html, $encoding);
     }
 
+    /**
+     * Load a HTML string.
+     *
+     * @param string $html
+     * @param string $encoding
+     *
+     * @return $this
+     */
     public function loadHTML($html, $encoding = null)
     {
         $this->params['document_html'] = $html;
@@ -87,6 +105,11 @@ class PDF
         return $this;
     }
 
+    /**
+     * Load a HTML file.
+     *
+     * @param string $file
+     */
     public function loadFile($file)
     {
         $html = file_get_contents($file);
@@ -102,6 +125,14 @@ class PDF
         $this->loadHTML($html, $encoding);
     }
 
+    /**
+     * Set the paper size and orientation.
+     *
+     * @param string $layout
+     * @param string $orientation
+     *
+     * @return $this
+     */
     public function setPaper($layout, $orientation = 'portrait')
     {
         $this->params['page_size'] = $layout;
@@ -146,8 +177,6 @@ class PDF
     }
 
     /**
-     * Prepare the request and make the api call.
-     *
      * @throws \Exception
      */
     private function render()
@@ -203,6 +232,7 @@ class PDF
      * @param string $filename
      *
      * @throws \InvalidArgumentException
+     * @throws \Exception
      *
      * @return \Illuminate\Http\Response
      */
@@ -237,7 +267,7 @@ class PDF
      * @throws \InvalidArgumentException
      * @throws \BadMethodCallException
      *
-     * @return $this|mixed
+     * @return $this
      */
     public function __call($name, $arguments)
     {
@@ -253,16 +283,37 @@ class PDF
         throw new \BadMethodCallException('Call to undefined method ' . static::class . '::' . $name . '()');
     }
 
+    /**
+     * @param $name
+     * @param $value
+     *
+     * @return mixed
+     */
     public function __set($name, $value)
     {
         return $this->params[$name] = $value;
     }
 
+    /**
+     * Add some parameters.
+     *
+     * @param array $params
+     *
+     * @return $this
+     */
     public function addParams(array $params)
     {
         return $this->setParams($params);
     }
 
+    /**
+     * Add/Replace some parameters.
+     *
+     * @param array $params
+     * @param bool $replace
+     *
+     * @return $this
+     */
     public function setParams(array $params, $replace = false)
     {
         if ($replace) {
@@ -274,18 +325,31 @@ class PDF
         return $this;
     }
 
+    /**
+     * Replace some parameters.
+     *
+     * @param array $params
+     *
+     * @return $this
+     */
     public function replaceParams(array $params)
     {
         return $this->setParams($params, true);
     }
 
+    /**
+     * See all the current parameters.
+     *
+     * @return array
+     */
     public function seeParams()
     {
         return $this->params->toArray();
     }
 
     /**
-     * @param string $key uri or postParams
+     * See the arguments which will be sent during the request.
+     * @param string $key
      *
      * @return array
      */
