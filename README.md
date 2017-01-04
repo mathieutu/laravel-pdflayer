@@ -1,5 +1,10 @@
 ## PDFLayer API bridge for Laravel 5
 
+[![Travis Build](https://img.shields.io/travis/mathieutu/laravel-pdflayer/master.svg)](https://travis-ci.org/mathieutu/laravel-pdflayer?branch=master) 
+[![StyleCI](https://styleci.io/repos/77931503/shield?branch=master)](https://styleci.io/repos/77931503) 
+[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/mathieutu/laravel-pdflayer.svg)](https://scrutinizer-ci.com/g/mathieutu/laravel-pdflayer/?branch=master) 
+[![Code Quality](https://img.shields.io/scrutinizer/g/mathieutu/laravel-pdflayer.svg)](https://scrutinizer-ci.com/g/mathieutu/laravel-pdflayer/?branch=master) 
+
 Require this package in your composer.json and update composer. This will download the package and the dompdf + fontlib libraries also.
 ```bash
 composer require mathieutu/laravel-pdflayer
