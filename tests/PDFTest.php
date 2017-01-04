@@ -232,4 +232,24 @@ class PDFTest extends TestCase
         ]);
     }
 
+    public function testParamsMethods()
+    {
+        $this->pdf->addParams(['creator' => 'someone', 'watermark_in_background' => 1]);
+        $this->pdf->addParams(['creator' => 'mathieutu', 'no_hyperlinks' => 1]);
+        $this->seeInRequest([
+            'watermark_in_background' => true,
+            'creator'                 => 'mathieutu',
+            'no_hyperlinks'           => true,
+
+        ]);
+
+        $this->pdf->replaceParams(['grayscale' => true]);
+        $this->pdf->setParams(['low_quality' => true]);
+        $this->seeInRequest([
+            'grayscale'   => true,
+            'low_quality' => true,
+            'access_key'  => 'testAccessKey',
+        ], true);
+
+    }
 }

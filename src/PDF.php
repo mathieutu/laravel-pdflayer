@@ -247,6 +247,27 @@ class PDF
         return $this->params[$name] = $value;
     }
 
+    public function addParams(array $params)
+    {
+        return $this->setParams($params);
+    }
+
+    public function setParams(array $params, $replace = false)
+    {
+        if ($replace) {
+            $this->params = collect($params);
+        } else {
+            $this->params = $this->params->merge($params);
+        }
+
+        return $this;
+    }
+
+    public function replaceParams(array $params)
+    {
+        return $this->setParams($params, true);
+    }
+
     public function seeParams()
     {
         return $this->params->toArray();
