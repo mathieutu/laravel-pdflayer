@@ -73,8 +73,8 @@ class PDF
      * Load a View and convert it to HTML.
      *
      * @param string $view
-     * @param array $data
-     * @param array $mergeData
+     * @param array  $data
+     * @param array  $mergeData
      * @param string $encoding
      *
      * @return $this
@@ -310,7 +310,7 @@ class PDF
      * Add/Replace some parameters.
      *
      * @param array $params
-     * @param bool $replace
+     * @param bool  $replace
      *
      * @return $this
      */
@@ -349,6 +349,7 @@ class PDF
 
     /**
      * See the arguments which will be sent during the request.
+     *
      * @param string $key
      *
      * @return array
