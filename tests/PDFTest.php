@@ -18,7 +18,7 @@ use Mockery as m;
 
 class PDFTest extends TestCase
 {
-    /** @var  PDF */
+    /** @var PDF */
     private $pdf;
 
     /**
@@ -94,7 +94,7 @@ class PDFTest extends TestCase
 
         $this->seeInRequest([
             'document_url' => 'essai%2Fma+page.php%3Favec%26des%26param%C3%A8tres',
-            'secret_key'   => 'd2da2a1f04d1afad1fb5b0289abcb8de' //md5(url . 'foo')
+            'secret_key'   => 'd2da2a1f04d1afad1fb5b0289abcb8de', //md5(url . 'foo')
         ]);
     }
 
@@ -134,7 +134,6 @@ class PDFTest extends TestCase
         $this->seeInRequest([
             'text_encoding' => 'UTF-8',
         ]);
-
     }
 
     public function testSetPaper()
@@ -250,6 +249,5 @@ class PDFTest extends TestCase
             'low_quality' => true,
             'access_key'  => 'testAccessKey',
         ], true);
-
     }
 }

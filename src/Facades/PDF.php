@@ -1,4 +1,5 @@
 <?php
+
 namespace MathieuTu\PDFLayer\Facades;
 
 use Illuminate\Support\Facades\Facade as IlluminateFacade;

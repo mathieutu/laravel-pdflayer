@@ -8,7 +8,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Testing\TestCase;
 use MathieuTu\PDFLayer\PDF;
 use MathieuTu\PDFLayer\PDFLayerServiceProvider;
-use Mockery as m;
 
 class PDFLayerServiceProviderTest extends TestCase
 {

@@ -12,7 +12,12 @@ use MathieuTu\PDFLayer\Exceptions\PDFLayerException;
 
 class PDF
 {
-    private $httpClient, $view, $files, $config, $params, $pdf;
+    private $httpClient;
+    private $view;
+    private $files;
+    private $config;
+    private $params;
+    private $pdf;
 
     public function __construct(Client $httpClient, ConfigRepository $config, Filesystem $files, ViewFactory $view)
     {
@@ -24,7 +29,7 @@ class PDF
     }
 
     /**
-     * Load parameters from config file
+     * Load parameters from config file.
      *
      * @param \Illuminate\Contracts\Config\Repository $config
      *
@@ -44,6 +49,7 @@ class PDF
         if ($this->config['sandbox']) {
             $params['test'] = 1;
         }
+
         return $params;
     }
 
@@ -105,12 +111,13 @@ class PDF
     }
 
     /**
-     * Return a response with the PDF to show in the browser
+     * Return a response with the PDF to show in the browser.
      *
      * @param string $filename
      *
-     * @return \Illuminate\Http\Response
      * @throws \InvalidArgumentException
+     *
+     * @return \Illuminate\Http\Response
      */
     public function stream($filename = 'document.pdf')
     {
@@ -125,8 +132,9 @@ class PDF
     /**
      * Output the PDF as a string.
      *
-     * @return string The rendered PDF as string
      * @throws \Exception
+     *
+     * @return string The rendered PDF as string
      */
     public function output()
     {
@@ -138,7 +146,7 @@ class PDF
     }
 
     /**
-     * Prepare the request and make the api call
+     * Prepare the request and make the api call.
      *
      * @throws \Exception
      */
@@ -168,9 +176,10 @@ class PDF
      * @param $uri
      * @param $postParams
      *
-     * @return string
      * @throws \RuntimeException
      * @throws \MathieuTu\PDFLayer\Exceptions\PDFLayerException
+     *
+     * @return string
      */
     private function doRequest($uri, $postParams)
     {
@@ -189,12 +198,13 @@ class PDF
     }
 
     /**
-     * Make the PDF downloadable by the user
+     * Make the PDF downloadable by the user.
      *
      * @param string $filename
      *
-     * @return \Illuminate\Http\Response
      * @throws \InvalidArgumentException
+     *
+     * @return \Illuminate\Http\Response
      */
     public function download($filename = 'document.pdf')
     {
@@ -207,7 +217,7 @@ class PDF
     }
 
     /**
-     * Save the PDF to a file
+     * Save the PDF to a file.
      *
      * @param $filename
      *
@@ -224,16 +234,17 @@ class PDF
      * @param $name
      * @param $arguments
      *
-     * @return $this|mixed
      * @throws \InvalidArgumentException
      * @throws \BadMethodCallException
+     *
+     * @return $this|mixed
      */
     public function __call($name, $arguments)
     {
         if (Str::startsWith($name, 'set')) {
             $propertyCamel = Str::substr($name, Str::length('set'));
             $property = Str::snake($propertyCamel);
-            
+
             $this->params[$property] = $arguments[0];
 
             return $this;

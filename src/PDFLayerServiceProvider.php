@@ -1,4 +1,5 @@
 <?php
+
 namespace MathieuTu\PDFLayer;
 
 use GuzzleHttp\Client;
@@ -7,7 +8,6 @@ use Illuminate\Support\ServiceProvider;
 
 class PDFLayerServiceProvider extends ServiceProvider
 {
-
     protected $defer = true;
 
     public function boot()
@@ -30,5 +30,4 @@ class PDFLayerServiceProvider extends ServiceProvider
     {
         return ['pdflayer', PDF::class];
     }
-
 }
