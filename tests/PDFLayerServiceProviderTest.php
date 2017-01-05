@@ -2,11 +2,11 @@
 
 namespace MathieuTu\PDFLayer\Tests;
 
-use Illuminate\Contracts\Console\Kernel;
+use MathieuTu\PDFLayer\PDF;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\TestCase;
-use MathieuTu\PDFLayer\PDF;
 use MathieuTu\PDFLayer\PDFLayerServiceProvider;
 
 class PDFLayerServiceProviderTest extends TestCase

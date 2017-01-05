@@ -3,12 +3,12 @@
 namespace MathieuTu\PDFLayer;
 
 use GuzzleHttp\Client;
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
-use Illuminate\Contracts\View\Factory as ViewFactory;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Http\Response;
 use Illuminate\Support\Str;
+use Illuminate\Http\Response;
+use Illuminate\Filesystem\Filesystem;
 use MathieuTu\PDFLayer\Exceptions\PDFLayerException;
+use Illuminate\Contracts\View\Factory as ViewFactory;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 
 class PDF
 {

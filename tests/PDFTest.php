@@ -2,19 +2,19 @@
 
 namespace MathieuTu\PDFLayer\Tests;
 
+use Mockery as m;
 use GuzzleHttp\Client;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response as GuzzleResponse;
-use Illuminate\Config\Repository;
-use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Foundation\Testing\TestCase;
-use Illuminate\View\Factory;
 use Illuminate\View\View;
 use MathieuTu\PDFLayer\PDF;
+use GuzzleHttp\HandlerStack;
+use Illuminate\View\Factory;
+use Illuminate\Config\Repository;
+use GuzzleHttp\Handler\MockHandler;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Testing\TestCase;
+use GuzzleHttp\Psr7\Response as GuzzleResponse;
 use MathieuTu\PDFLayer\PDFLayerServiceProvider;
-use Mockery as m;
 
 class PDFTest extends TestCase
 {
