@@ -1,9 +1,10 @@
 ## PDFLayer API bridge for Laravel 5
 
-[![Travis Build](https://img.shields.io/travis/mathieutu/laravel-pdflayer/master.svg)](https://travis-ci.org/mathieutu/laravel-pdflayer?branch=master) 
+[![Travis Build](https://img.shields.io/travis/mathieutu/laravel-pdflayer/master.svg?style=flat-square&label=Build)](https://travis-ci.org/mathieutu/laravel-pdflayer?branch=master) 
 [![StyleCI](https://styleci.io/repos/77931503/shield?branch=master)](https://styleci.io/repos/77931503) 
-[![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/mathieutu/laravel-pdflayer.svg)](https://scrutinizer-ci.com/g/mathieutu/laravel-pdflayer/?branch=master) 
-[![Code Quality](https://img.shields.io/scrutinizer/g/mathieutu/laravel-pdflayer.svg)](https://scrutinizer-ci.com/g/mathieutu/laravel-pdflayer/?branch=master) 
+[![Test Coverage](https://img.shields.io/scrutinizer/coverage/g/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Coverage)](https://scrutinizer-ci.com/g/mathieutu/laravel-pdflayer/?branch=master) 
+[![Code Quality](https://img.shields.io/scrutinizer/g/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Quality)](https://scrutinizer-ci.com/g/mathieutu/laravel-pdflayer/?branch=master) 
+[![Packagist](https://img.shields.io/packagist/dt/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Downloads)](https://packagist.org/packages/mathieutu/laravel-pdflayer)
 
 Require this package in your composer.json and update composer. This will download the package and the dompdf + fontlib libraries also.
 ```bash
@@ -55,8 +56,10 @@ php artisan vendor:publish --provider="MathieuTu\PDFLayer\PDFLayerServiceProvide
     
 ### License and thanks
 
-This PDFLayer Bridge for Laravel is an open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+This PDFLayer Bridge for Laravel is an open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
-This readme and some methods of the `PDF` class are adapted from the [barryvdh/laravel-dompdf](https://github.com/barryvdh/laravel-dompdf) package thanks to him for his job.
+The developer is not affiliated in any way with the [pdflayer.com](https://pdflayer.com) service.
+
+This Readme and some methods of the `PDF` class are adapted from the [barryvdh/laravel-dompdf](https://github.com/barryvdh/laravel-dompdf) package. Thanks to him for his job.
 
 This package was originally written for a project by [Neoxia](http://neoxia.com/), a web dev company in Paris, which works a lot with Laravel, and with love! We're hiring, contact us!
