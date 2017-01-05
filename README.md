@@ -1,10 +1,11 @@
-## PDFLayer API bridge for Laravel 5
+## PDFLayer API bridge for Laravel 5.2+
 
-[![Travis Build](https://img.shields.io/travis/mathieutu/laravel-pdflayer/master.svg?style=flat-square&label=Build)](https://travis-ci.org/mathieutu/laravel-pdflayer?branch=master) 
+[![Travis build](https://img.shields.io/travis/mathieutu/laravel-pdflayer/master.svg?style=flat-square&label=Build)](https://travis-ci.org/mathieutu/laravel-pdflayer?branch=master) 
 [![StyleCI](https://styleci.io/repos/77931503/shield?branch=master)](https://styleci.io/repos/77931503) 
-[![Test Coverage](https://img.shields.io/scrutinizer/coverage/g/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Coverage)](https://scrutinizer-ci.com/g/mathieutu/laravel-pdflayer/?branch=master) 
-[![Code Quality](https://img.shields.io/scrutinizer/g/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Quality)](https://scrutinizer-ci.com/g/mathieutu/laravel-pdflayer/?branch=master) 
-[![Packagist](https://img.shields.io/packagist/dt/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Downloads)](https://packagist.org/packages/mathieutu/laravel-pdflayer)
+[![Test coverage](https://img.shields.io/scrutinizer/coverage/g/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Coverage)](https://scrutinizer-ci.com/g/mathieutu/laravel-pdflayer/?branch=master) 
+[![Code quality](https://img.shields.io/scrutinizer/g/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Quality)](https://scrutinizer-ci.com/g/mathieutu/laravel-pdflayer/?branch=master) 
+[![Packagist downloads](https://img.shields.io/packagist/dt/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Downloads)](https://packagist.org/packages/mathieutu/laravel-pdflayer)
+[![Stable version](https://img.shields.io/packagist/v/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Packagist)](https://packagist.org/packages/mathieutu/laravel-pdflayer)
 
 Require this package in your composer.json and update composer. This will download the package and the dompdf + fontlib libraries also.
 ```bash
