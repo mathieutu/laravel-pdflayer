@@ -20,18 +20,32 @@ class PDFLayerServiceProviderTest extends TestCase
      */
     public function createApplication()
     {
-        /** @var Application $app */
         $app = require __DIR__ . '/../vendor/laravel/laravel/bootstrap/app.php';
-
-        $app->register(PDFLayerServiceProvider::class);
-        AliasLoader::getInstance()->alias('PDF', \MathieuTu\PDFLayer\Facades\PDF::class);
         $app->make(Kernel::class)->bootstrap();
+        $this->registerProvider($app);
 
         return $app;
     }
 
+    /**
+     * @param Application $app
+     */
+    private function registerProvider(Application $app)
+    {
+        $providers = config('app.providers');
+        $providers[] = PDFLayerServiceProvider::class;
+        config(['app.providers' => $providers]);
+
+        $app->registerConfiguredProviders();
+        AliasLoader::getInstance()->alias('PDF', \MathieuTu\PDFLayer\Facades\PDF::class);
+    }
+
     public function testConfig()
     {
+        // Provider is deferred so the config should be null before it is called.
+        $this->assertNull(config('pdflayer'));
+
+        app('pdflayer');
         $config = require __DIR__ . '/../config/pdflayer.php';
         $this->assertEquals($config, config('pdflayer'));
     }
@@ -41,5 +55,13 @@ class PDFLayerServiceProviderTest extends TestCase
         $this->assertInstanceOf(PDF::class, app('pdflayer'));
         $this->assertInstanceOf(PDF::class, app(PDF::class));
         $this->assertInstanceOf(PDF::class, \PDF::setParams([]));
+    }
+
+    public function testDeferring()
+    {
+        $this->assertArraySubset([
+            'pdflayer' => PDFLayerServiceProvider::class,
+            PDF::class => PDFLayerServiceProvider::class,
+        ], $this->app->getDeferredServices());
     }
 }

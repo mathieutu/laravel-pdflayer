@@ -152,11 +152,22 @@ class PDF
      */
     public function stream($filename = 'document.pdf')
     {
-        $output = $this->output();
+        return $this->makeResponse($filename, 'inline');
+    }
 
-        return new Response($output, 200, [
+    /**
+     * @param string $filename
+     * @param string $contentDisposition
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \Illuminate\Http\Response
+     */
+    private function makeResponse($filename, $contentDisposition)
+    {
+        return new Response($this->output(), 200, [
             'Content-Type'        => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="' . $filename . '"',
+            'Content-Disposition' => $contentDisposition . '; filename="' . $filename . '"',
         ]);
     }
 
@@ -238,12 +249,7 @@ class PDF
      */
     public function download($filename = 'document.pdf')
     {
-        $output = $this->output();
-
-        return new Response($output, 200, [
-            'Content-Type'        => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-        ]);
+        return $this->makeResponse($filename, 'attachment');
     }
 
     /**
@@ -358,7 +364,7 @@ class PDF
     {
         list($uri, $postParams) = $this->prepareRequest();
 
-        if ($key) {
+        if ($key !== null) {
             return ${$key};
         }
 

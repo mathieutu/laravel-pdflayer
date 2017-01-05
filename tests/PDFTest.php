@@ -219,6 +219,10 @@ class PDFTest extends TestCase
         $this->pdf->save('baz.php');
     }
 
+    /**
+     * @expectedException     \BadMethodCallException
+     * @expectedExceptionMessage Call to undefined method MathieuTu\PDFLayer\PDF::foo()
+     */
     public function testMagicCallerAndSetter()
     {
         $this->pdf->setWatermarkInBackground(true);
@@ -229,6 +233,8 @@ class PDFTest extends TestCase
             'no_images'               => 1,
             'params'                  => 'foo',
         ]);
+
+        $this->pdf->foo();
     }
 
     public function testParamsMethods()
@@ -244,6 +250,11 @@ class PDFTest extends TestCase
 
         $this->pdf->replaceParams(['grayscale' => true]);
         $this->pdf->setParams(['low_quality' => true]);
+        $this->assertEquals(['grayscale' => true, 'low_quality' => true], $this->pdf->seeParams());
+        $this->assertEquals(
+            'https://api.pdflayer.com/api/convert?access_key=testAccessKey&grayscale=1&low_quality=1',
+            $this->pdf->seeRequestArgs('uri')
+        );
         $this->seeInRequest([
             'grayscale'   => true,
             'low_quality' => true,
