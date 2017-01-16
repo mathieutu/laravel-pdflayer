@@ -1,4 +1,6 @@
 ## PDFLayer API bridge for Laravel 5.2+
+[pdflayer.com](https://pdflayer.com) is an HTML to PDF conversion API for developers. 
+This package is an unofficial bridge to use this api with the PHP Laravel framework.
 
 [![Travis build](https://img.shields.io/travis/mathieutu/laravel-pdflayer/master.svg?style=flat-square&label=Build)](https://travis-ci.org/mathieutu/laravel-pdflayer?branch=master) 
 [![StyleCI](https://styleci.io/repos/77931503/shield?branch=master)](https://styleci.io/repos/77931503) 
@@ -7,25 +9,25 @@
 [![Packagist downloads](https://img.shields.io/packagist/dt/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Downloads)](https://packagist.org/packages/mathieutu/laravel-pdflayer)
 [![Stable version](https://img.shields.io/packagist/v/mathieutu/laravel-pdflayer.svg?style=flat-square&label=Packagist)](https://packagist.org/packages/mathieutu/laravel-pdflayer)
 
-Require this package in your composer.json and update composer. This will download the package and the dompdf + fontlib libraries also.
+## Installation
+
+Require this package in your composer.json and update composer.
 ```bash
 composer require mathieutu/laravel-pdflayer
 ```
 
-## Installation
-### Laravel 5.x:
-
-After updating composer, add the ServiceProvider to the providers array in config/app.php
+### Laravel 5:
+After updating composer, add the ServiceProvider to the providers array in `config/app.php`:
 ```php
 MathieuTu\PDFLayer\PDFLayerServiceProvider::class,
 ```
 
-You can optionally use the facade for shorter code. Add this to your facades:
+You can optionally use the facade for shorter code. Add this to your facades (in `config/app.php`):
 ```php
 'PDF' => MathieuTu\PDFLayer\Facades\PDF::class,
 ```
-  
-## Using
+ 
+## Usage
 
 You can create a new PDFLayer instance and load a HTML string, file, view name or even an url. 
 You can save it to a file, stream (show in browser) or download.
@@ -61,6 +63,8 @@ This PDFLayer Bridge for Laravel is an open-sourced software licensed under the 
 
 The developer is not affiliated in any way with the [pdflayer.com](https://pdflayer.com) service.
 
+Issues and PRs are obviously welcomed.
+
 This Readme and some methods of the `PDF` class are adapted from the [barryvdh/laravel-dompdf](https://github.com/barryvdh/laravel-dompdf) package. Thanks to him for his job.
 
-This package was originally written for a project by [Neoxia](http://neoxia.com/), a web dev company in Paris, which works a lot with Laravel, and with love! We're hiring, contact us!
+This package was originally written for a project by [Neoxia](https://neoxia.com/), a web dev company in Paris, which works a lot with Laravel, and with love! We're hiring, [contact us](mailto:dev@mathieutu.ovh)!
