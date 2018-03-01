@@ -130,9 +130,10 @@ class PDFTest extends TestCase
             'document_html' => '<h1>Hello world!</h1>',
         ]);
 
-        $this->pdf->loadFile('http://neoxia.com/');
+        $this->pdf->loadFile('https://raw.githubusercontent.com/mathieutu/laravel-pdflayer/master/tests/test_file.html');
         $this->seeInRequest([
             'text_encoding' => 'UTF-8',
+            'document_html' => '<h1>Hello world!</h1>',
         ]);
     }
 
@@ -213,7 +214,7 @@ class PDFTest extends TestCase
     {
         $httpClient = $this->mockClient(null, true);
         $files = m::mock(Filesystem::class);
-        $files->shouldReceive('put');
+        $files->shouldReceive('put')->with('baz.php', 'generatedPDF');
 
         $this->newPDF($httpClient, null, $files);
         $this->pdf->save('baz.php');

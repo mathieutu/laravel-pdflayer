@@ -1,4 +1,4 @@
-## PDFLayer API bridge for Laravel 5.2+
+## PDFLayer API bridge for Laravel 5.5+ (for 5.2+ take the 1.* version)
 [pdflayer.com](https://pdflayer.com) is an HTML to PDF conversion API for developers. 
 This package is an unofficial bridge to use this api with the PHP Laravel framework.
 
@@ -15,29 +15,18 @@ Require this package in your composer.json and update composer.
 ```bash
 composer require mathieutu/laravel-pdflayer
 ```
-
-### Laravel 5:
-After updating composer, add the ServiceProvider to the providers array in `config/app.php`:
-```php
-MathieuTu\PDFLayer\PDFLayerServiceProvider::class,
-```
-
-You can optionally use the facade for shorter code. Add this to your facades (in `config/app.php`):
-```php
-'PDF' => MathieuTu\PDFLayer\Facades\PDF::class,
-```
  
 ## Usage
 
 You can create a new PDFLayer instance and load a HTML string, file, view name or even an url. 
 You can save it to a file, stream (show in browser) or download.
 
-To create an new instance, you can use the `App` class, the `app()` helper, use the [facade](https://laravel.com/docs/5.3/facades), or (better) use [automatic dependency injection](https://laravel.com/docs/5.3/controllers#dependency-injection-and-controllers) :
+To create an new instance, you can use the `App` class, the `app()` helper, use the [facade](https://laravel.com/docs/5.5/facades), or (better) use [automatic dependency injection](https://laravel.com/docs/5.5/controllers#dependency-injection-and-controllers) :
 ```php
 $pdf = App::make('pdflayer');
 $pdf = app('pdflayer');
 $pdf = PDF::anyMethod();
-function (MathieuTu\PDFLayer\PDF $pdf) {}
+public function downloadPdf(MathieuTu\PDFLayer\PDF $pdf) {}
 ```
 You can chain the methods:
 ```php
@@ -63,8 +52,10 @@ This PDFLayer Bridge for Laravel is an open-sourced software licensed under the 
 
 The developer is not affiliated in any way with the [pdflayer.com](https://pdflayer.com) service.
 
-Issues and PRs are obviously welcomed.
-
 This Readme and some methods of the `PDF` class are adapted from the [barryvdh/laravel-dompdf](https://github.com/barryvdh/laravel-dompdf) package. Thanks to him for his job.
 
-This package was originally written for a project by [Neoxia](https://neoxia.com/), a web dev company in Paris, which works a lot with Laravel, and with love! We're hiring, [contact us](mailto:dev@mathieutu.ovh)!
+
+### Contributing
+
+Issues and PRs are obviously welcomed and encouraged, as well for new features than documentation.
+Each piece of code added should be fully tested, but we can do that all together, so please don't be afraid by that. 
