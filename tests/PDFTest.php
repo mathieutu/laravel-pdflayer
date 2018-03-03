@@ -187,11 +187,6 @@ class PDFTest extends TestCase
         ]);
     }
 
-    /**
-     * @param $response
-     *
-     * @return mixed
-     */
     private function assertResponseHeadersContains(\Illuminate\Http\Response $response, array $headers)
     {
         foreach ($headers as $key => $value) {
